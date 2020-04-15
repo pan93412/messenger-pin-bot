@@ -3,7 +3,7 @@ import { HandlerMeta, metaWhen } from './type';
 export const meta: HandlerMeta = {
   when: metaWhen.onMessage,
   handler: (api, db, match, message) => {
-    if (match && match[1] && message) {
+    if (match && message) {
       const msg = message as Facebook.IReceivedMessage;
 
       db.remove(msg.threadID);

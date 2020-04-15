@@ -52,15 +52,17 @@ login({
     const msg = message as Facebook.IReceivedMessage;
 
     modList.forEach((m) => {
-      if (m.match && msg.body) {
-        m.handler(
-          api,
-          pinDb,
-          msg.body.match(m.match),
-          msg,
-          err,
-        );
-      }
+      const match: RegExpMatchArray | null = (m.match && msg.body)
+        ? msg.body.match(m.match)
+        : null;
+
+      m.handler(
+        api,
+        pinDb,
+        match,
+        msg,
+        err,
+      );
     });
   });
 });

@@ -40,10 +40,12 @@ export default class PinDB {
    */
   shouldSend(threadID: string): boolean {
     let returnAs = false;
-    if (this.#db[threadID].timer >= this.#maxMsg) {
-      returnAs = true;
-      this.#db[threadID].timer = 0;
-    } else this.#db[threadID].timer += 1;
+    if (this.#db[threadID]) {
+      if (this.#db[threadID].timer >= this.#maxMsg) {
+        returnAs = true;
+        this.#db[threadID].timer = 0;
+      } else this.#db[threadID].timer += 1;
+    }
     return returnAs;
   }
 }
