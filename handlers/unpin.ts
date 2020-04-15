@@ -2,19 +2,19 @@ import { HandlerMeta, metaWhen } from './type';
 
 export const meta: HandlerMeta = {
   when: metaWhen.onMessage,
-  handler: (match, api, db, message) => {
-    if (match[1] && message) {
+  handler: (api, db, match, message) => {
+    if (match && match[1] && message) {
       const msg = message as Facebook.IReceivedMessage;
 
-      db.set(msg.threadID, match[1]);
+      db.remove(msg.threadID);
       api.sendMessage(
-        `[Bot] ${msg.senderID} 置底了一則訊息。`,
+        `[Bot] ${msg.senderID} 取消了置底訊息。`,
         msg.threadID,
         () => {},
       );
     }
   },
-  match: /^(?:#pin|#置底) (.+)$/,
+  match: /^(?:#unpin|#取消置底)$/,
 };
 
 export default meta;

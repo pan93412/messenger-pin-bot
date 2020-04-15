@@ -10,6 +10,12 @@ interface MessageMainDB {
 export default class PinDB {
   #db: MessageMainDB = {};
 
+  #maxMsg: number;
+
+  constructor(maxMsg = 5) {
+    this.#maxMsg = maxMsg;
+  }
+
   set(threadID: string, message: string): void {
     this.#db[threadID] = {
       msg: message,
@@ -34,7 +40,7 @@ export default class PinDB {
    */
   shouldSend(threadID: string): boolean {
     let returnAs = false;
-    if (this.#db[threadID].timer >= 5) {
+    if (this.#db[threadID].timer >= this.#maxMsg) {
       returnAs = true;
       this.#db[threadID].timer = 0;
     } else this.#db[threadID].timer += 1;

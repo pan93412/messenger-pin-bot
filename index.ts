@@ -17,7 +17,7 @@ const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
 });
-const pinDb = new Db();
+const pinDb = new Db(maxTimes);
 
 login({
   email,
@@ -49,6 +49,18 @@ login({
     }
     if (!message) return;
 
-    modList.forEach((m) => {});
+    const msg = message as Facebook.IReceivedMessage;
+
+    modList.forEach((m) => {
+      if (m.match && msg.body) {
+        m.handler(
+          api,
+          pinDb,
+          msg.body.match(m.match),
+          msg,
+          err,
+        );
+      }
+    });
   });
 });

@@ -8,9 +8,9 @@ export enum metaWhen {
 
 export interface HandlerFunc {
   (
-    match: RegExpMatchArray,
     api: Facebook.API,
     db: PinDB,
+    match?: RegExpMatchArray | null,
     message?: Facebook.IReceived | Facebook.IReceivedMessage,
     err?: Facebook.IError
   ): void;
